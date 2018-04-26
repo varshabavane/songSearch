@@ -1,14 +1,52 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+  <progress-bar [progress]='currentTrack.progress'></progress-bar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content fullscreen>
+  <ion-card-header>
+    {{currentTrack.title}}
+  </ion-card-header>
+  <ion-card-content>
+    {{currentTrack.artist}}
+  </ion-card-content>
 </ion-content>
+
+<ion-list no-lines>
+  <button detail-none ion-item *ngFor="let track of tracks, let i=index;" (click)="track.playing ? pauseTrack(track) : playTrack(track)"
+    [ngcClass]="{'alternate' :i %2,'playing':track.playing }">
+    <ion-avatar item-left>
+      <img src="">
+      <ion-spinner item-right *ngIf="track.playing" name="bubbles" item-left></ion-spinner>
+
+    </ion-avatar>
+    <h2>{{currentTrack.title}}</h2>
+    <p>{{currentTrack.artist}}</p>
+  </button>
+</ion-list>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col width='25'>
+        <button *ngIf="!currentTrack.playing" (click)="playTrack(currentTrack)" color="light" clear ion-button icon-only>
+          <ion-icon name="play"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col width='25'>
+        <button *ngIf="currentTrack.playing" (click)="pauseTrack(currentTrack)" color="light" clear ion-button icon-only>
+          <ion-icon name="pause"></ion-icon>
+        </button>
+
+        <button (click)="nextTrack()" color="light" clear ion-button icon-only>
+          <ion-icon name="skip-forward"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col width="25">
+        <button (click)="filechooser()" color="light" clear ion-button icon-only>
+          <ion-icon name="open"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
