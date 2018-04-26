@@ -35,40 +35,40 @@ export class HomePage {
         playing:false,
         songPath: "/android_asset/www/assets/songs/lvuZindgi.mp3",
         progress: 0,
-        img: "/android_asset/www/assets/imgs/3.jpg"
-      },
-      {
-        title: "pahli najarme",
-        artist: "avdutgupte",
-        playing: false,
-        songPath: "/android_asset/www/assets/songs/pahlinajarme.mp3",
-        progress: 0,
-        img: "/android_asset/www/assets/imgs/2.jpg"
-      },
-      {
-        title: "Gannayka dj",
-        artist: "",
-        playing:false,
-        songPath: "/android_asset/www/assets/songs/gannayka.mp3",
-        progress: 0,
-        img: "/android_asset/www/assets/imgs/3.jpg"
-      },
-      {
-        title: "tik-tik",
-        artist: "atif aslam",
-        playing: false,
-        songPath: "/android_asset/www/assets/songs/tik-tik.mp3",
-        progress: 0,
-        img: "/android_asset/www/assets/imgs/4.jpg"
-      },
-      {
-        title: "sojajara",
-        artist: "papon",
-        playing: false,
-        songPath: "/android_asset/www/assets/songs/sojajara.mp3",
-        progress: 0,
-        img: "/android_asset/www/assets/imgs/1.jpg"
+        img: "/android_asset/www/assets/imgs/5.jpg"
       }
+      // {
+      //   title: "pahli najarme",
+      //   artist: "avdutgupte",
+      //   playing: false,
+      //   songPath: "/android_asset/www/assets/songs/pahlinajarme.mp3",
+      //   progress: 0,
+      //   img: "/android_asset/www/assets/imgs/2.jpg"
+      // },
+      // {
+      //   title: "Gannayka dj",
+      //   artist: "",
+      //   playing:false,
+      //   songPath: "/android_asset/www/assets/songs/gannayka.mp3",
+      //   progress: 0,
+      //   img: "/android_asset/www/assets/imgs/3.jpg"
+      // },
+      // {
+      //   title: "tik-tik",
+      //   artist: "atif aslam",
+      //   playing: false,
+      //   songPath: "/android_asset/www/assets/songs/tik-tik.mp3",
+      //   progress: 0,
+      //   img: "/android_asset/www/assets/imgs/4.jpg"
+      // },
+      // {
+      //   title: "sojajara",
+      //   artist: "papon",
+      //   playing: false,
+      //   songPath: "/android_asset/www/assets/songs/sojajara.mp3",
+      //   progress: 0,
+      //   img: "/android_asset/www/assets/imgs/1.jpg"
+      
     ];
     this.currentTrack = this.tracks[0];
   }
