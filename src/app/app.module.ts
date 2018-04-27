@@ -10,6 +10,8 @@ import { MyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
 import { ProgressBarComponent } from "../components/progress-bar/progress-bar";
 
+import { File } from '@ionic-native/file';
+import { FilePath } from '@ionic-native/file-path';
 @NgModule({
   declarations: [MyApp, HomePage, ProgressBarComponent],
   imports: [BrowserModule, IonicModule.forRoot(MyApp)],
@@ -20,7 +22,9 @@ import { ProgressBarComponent } from "../components/progress-bar/progress-bar";
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     Media,
-    FileChooser
+    FileChooser,
+    File,
+    FilePath
   ]
 })
 export class AppModule {}
