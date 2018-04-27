@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Media, MediaObject } from '@ionic-native/media'
+import { FileChooser } from '@ionic-native/file-chooser'
 
 @Component({
   selector: 'page-home',

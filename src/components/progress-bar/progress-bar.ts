@@ -6,7 +6,7 @@ import { Component,Input } from '@angular/core';
   templateUrl: 'progress-bar.html'
 })
 export class ProgressBarComponent {
-
+@Input('progress')progress;
   text: string;
 
   constructor() {

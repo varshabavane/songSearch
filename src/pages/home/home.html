@@ -1,52 +1,67 @@
 <ion-header>
-  <progress-bar [progress]='currentTrack.progress'></progress-bar>
+  <progress-bar [progress]="currentTrack.progress"></progress-bar>
 </ion-header>
 
 <ion-content fullscreen>
-  <ion-card-header>
-    {{currentTrack.title}}
-  </ion-card-header>
-  <ion-card-content>
-    {{currentTrack.artist}}
-  </ion-card-content>
+
+ <ion-card ion-fixed>
+   <ion-card-header>
+     {{currentTrack.title}}
+   </ion-card-header>
+   <ion-card-content>
+     {{currentTrack.artist}}
+   </ion-card-content>
+
+ </ion-card>
+
+ <ion-list no-lines>
+   <button detail-none ion-item *ngFor="let track of tracks; let i = index;" (click)="track.playing ? pauseTrack(track) : playTrack(track)"
+     [ngClass]="{ 'alternate': i % 2, 'playing': track.playing }">
+     <ion-avatar item-left>
+       <img [src]='track.img'>
+       <ion-spinner item-right *ngIf="track.playing" name="bubbles" item-left></ion-spinner>
+     </ion-avatar>
+     <h2>{{track.artist}}</h2>
+     <p>{{track.title}}</p>
+   </button>
+ </ion-list>
+
 </ion-content>
 
-<ion-list no-lines>
-  <button detail-none ion-item *ngFor="let track of tracks, let i=index;" (click)="track.playing ? pauseTrack(track) : playTrack(track)"
-    [ngcClass]="{'alternate' :i %2,'playing':track.playing }">
-    <ion-avatar item-left>
-      <img src="">
-      <ion-spinner item-right *ngIf="track.playing" name="bubbles" item-left></ion-spinner>
-
-    </ion-avatar>
-    <h2>{{currentTrack.title}}</h2>
-    <p>{{currentTrack.artist}}</p>
-  </button>
-</ion-list>
-
 <ion-footer>
-  <ion-grid>
-    <ion-row>
-      <ion-col width='25'>
-        <button *ngIf="!currentTrack.playing" (click)="playTrack(currentTrack)" color="light" clear ion-button icon-only>
-          <ion-icon name="play"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col width='25'>
-        <button *ngIf="currentTrack.playing" (click)="pauseTrack(currentTrack)" color="light" clear ion-button icon-only>
-          <ion-icon name="pause"></ion-icon>
-        </button>
 
-        <button (click)="nextTrack()" color="light" clear ion-button icon-only>
-          <ion-icon name="skip-forward"></ion-icon>
-        </button>
-      </ion-col>
+ <ion-grid>
 
-      <ion-col width="25">
-        <button (click)="filechooser()" color="light" clear ion-button icon-only>
-          <ion-icon name="open"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+   <ion-row>
+
+     <ion-col width="25">
+       <button (click)="prevTrack()" color="light" clear ion-button icon-only>
+         <ion-icon name="skip-backward"></ion-icon>
+       </button>
+     </ion-col>
+
+     <ion-col width="25">
+       <button *ngIf="!currentTrack.playing" (click)="playTrack(currentTrack)" color="light" clear ion-button icon-only>
+         <ion-icon name="play"></ion-icon>
+         </button>
+         <button *ngIf="currentTrack.playing" (click)="pauseTrack(currentTrack)" color="light" clear ion-button icon-only>
+           <ion-icon name="pause"></ion-icon>
+           </button>
+     </ion-col>
+
+     <ion-col width="25">
+       <button (click)="nextTrack()" color="light" clear ion-button icon-only>
+         <ion-icon name="skip-forward"></ion-icon>
+       </button>
+     </ion-col>
+     <ion-col width="25">
+         <button (click)="filechooser()" color="light" clear ion-button icon-only>
+           <ion-icon name="open"></ion-icon>
+         </button>
+       </ion-col>
+
+   </ion-row>
+
+ </ion-grid>
+
 </ion-footer>
