@@ -22,6 +22,8 @@ export class HomePage {
   playing: boolean;
   currentTrack: any;
   progressInterval: any;
+  songNo = 0;
+
   constructor(
     public navCtrl: NavController,
     private fileChooser: FileChooser,
@@ -94,6 +96,7 @@ export class HomePage {
             // this.audioPlay(result);
             this.nativePath = result;
             let pathalone = this.nativePath.substring(8);
+            alert("pathalone " +pathalone)
             let newSong = {
               title: "aafreen",
               artist: "sonu nigam",
@@ -107,7 +110,7 @@ export class HomePage {
             //  this.playTrack()
           },
           err => {
-            alert(err);
+            console.log(err);
           }
         );
       })
@@ -162,6 +165,9 @@ export class HomePage {
   /* MUSIC File Search */
 
   getFileList(path: string) {
+    if (this.songNo > 3) {
+      return 0;
+    }
     // alert("foldername: " + path);
     let file = new File();
     this.file
@@ -174,6 +180,9 @@ export class HomePage {
               item.name != "." &&
               item.name != ".."
             ) {
+              // if(this.songNo<=3){
+              //  this.getFileList(path + "/" + item.name);
+              //}
               this.getFileList(path + "/" + item.name);
             } else {
               // alert("fileName insde filelist " + JSON.stringify(item.fullPath));
@@ -183,18 +192,20 @@ export class HomePage {
           }
         },
         error => {
-          alert("inside err " + error);
+          // alert("inside err " + error);
         }
       )
       // .then(() => alert("filelist" + JSON.stringifythis._fileList[0]))
       .catch(e => {
-        alert(JSON.stringify(e));
+        console.log(JSON.stringify(e));
       });
   }
 
   fileSearch() {
     // alert("hello");
-
+    if (this.songNo > 3) {
+      return 0;
+    }
     /* test */
 
     this.file
@@ -206,7 +217,11 @@ export class HomePage {
             item.name != "." &&
             item.name != ".."
           ) {
+            if (this.songNo > 3) {
+              return 0;
+            }
             this.folderCount++;
+
             this.getFileList(item.name); //Get all the files inside the folder. recursion will probably be useful here.
           } else if (item.isFile == true) {
             //File found
@@ -220,16 +235,19 @@ export class HomePage {
         }
       })
       .catch(e => {
-        alert(JSON.stringify(e));
+        console.log(JSON.stringify(e));
       });
   }
 
   FileDir() {
     //alert("filelist:" + JSON.parse(this._fileList[0]));
   }
-
+  /* for searching filetype */
   fileType(songDetail) {
     // alert("songPath " + JSON.stringify(songDetail));
+    if (this.songNo > 3) {
+      return 0;
+    }
     try {
       let filetype = new File();
       filetype
@@ -247,11 +265,11 @@ export class HomePage {
           }).then((sDetail: IFile) => {
             //alert("Detail: " + JSON.stringify(sDetail));
             if (sDetail.type == "audio/mpeg") {
-              // alert("mp3songs " + JSON.stringify(sDetail));
+              console.log("mp3songs " + JSON.stringify(sDetail));
 
               /* trim path */
-              let pathalone = songDetail.nativeURL.substring(8);
-
+              let pathalone =  (this.file.externalRootDirectory + songDetail.fullPath).substring(8);
+              alert("pathalone " + pathalone);
               this.tracks.push({
                 title: songDetail.name,
                 artist: songDetail.name /* need artist details */,
@@ -262,11 +280,12 @@ export class HomePage {
                 // name: songDetail.name,
                 // path: songDetail.fullPath
               });
+              this.songNo=this.songNo+1;
             }
           });
         });
     } catch {
-      e => alert(JSON.stringify(e));
+      e => console.log(JSON.stringify(e));
     }
   }
 }
