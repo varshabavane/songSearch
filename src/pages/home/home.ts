@@ -27,7 +27,6 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private fileChooser: FileChooser,
-    // private filePath: FilePath,
     private media: Media,
     public filePath: FilePath,
     public file: File
@@ -40,46 +39,7 @@ export class HomePage {
         songPath: "/android_asset/www/assets/songs/hrudyat vaje smthng.mp3",
         progress: 0,
         img: "/android_asset/www/assets/imgs/2.jpg"
-      },
-      {
-        title: "love u zindagi",
-        artist: "alia",
-        playing: false,
-        songPath: "/android_asset/www/assets/songs/lvuZindgi.mp3",
-        progress: 0,
-        img: "/android_asset/www/assets/imgs/5.jpg"
       }
-      // {
-      //   title: "pahli najarme",
-      //   artist: "avdutgupte",
-      //   playing: false,
-      //   songPath: "/android_asset/www/assets/songs/pahlinajarme.mp3",
-      //   progress: 0,
-      //   img: "/android_asset/www/assets/imgs/2.jpg"
-      // },
-      // {
-      //   title: "Gannayka dj",
-      //   artist: "",
-      //   playing:false,
-      //   songPath: "/android_asset/www/assets/songs/gannayka.mp3",
-      //   progress: 0,
-      //   img: "/android_asset/www/assets/imgs/3.jpg"
-      // },
-      // {
-      //   title: "tik-tik",
-      //   artist: "atif aslam",
-      //   playing: false,
-      //   songPath: "/android_asset/www/assets/songs/tik-tik.mp3",
-      //   progress: 0,
-      //   img: "/android_asset/www/assets/imgs/4.jpg"
-      // },
-      // {
-      //   title: "sojajara",
-      //   artist: "papon",
-      //   playing: false,
-      //   songPath: "/android_asset/www/assets/songs/sojajara.mp3",
-      //   progress: 0,
-      //   img: "/android_asset/www/assets/imgs/1.jpg"
     ];
     this.currentTrack = this.tracks[0];
   }
@@ -91,12 +51,9 @@ export class HomePage {
         (<any>window).FilePath.resolveNativePath(
           uri,
           result => {
-            // alert("result" + result);
-            // alert("uri" + uri);
-            // this.audioPlay(result);
             this.nativePath = result;
             let pathalone = this.nativePath.substring(8);
-            alert("pathalone " +pathalone)
+            // alert("pathalone " + pathalone);
             let newSong = {
               title: "aafreen",
               artist: "sonu nigam",
@@ -106,8 +63,6 @@ export class HomePage {
               img: "android/assets/imgs/1.mp3"
             };
             this.tracks.push(newSong);
-            // alert(JSON.stringify(this.tracks));
-            //  this.playTrack()
           },
           err => {
             console.log(err);
@@ -116,17 +71,6 @@ export class HomePage {
       })
       .catch(e => console.log(e));
   }
-  // audioPlay(res) {
-  //   this.nativePath = res;
-  //   alert(this.nativePath);
-  //   let pathalone = this.nativePath.substring(8);
-  //   alert("pathalone" + pathalone);
-  //   this.music.pause();
-  //   this.music = this.media.create(pathalone);
-
-  //   this.music.play();
-  // }
-
   playTrack(track) {
     for (let checktrack of this.tracks) {
       if (checktrack.playing) {
@@ -137,6 +81,10 @@ export class HomePage {
     this.currentTrack = track;
     this.music = this.media.create(this.currentTrack.songPath);
     this.music.play();
+    let musicDuration = this.media
+      .create(this.currentTrack.songPath)
+      .getDuration();
+    console.log(musicDuration);
     this.progressInterval = setInterval(() => {
       this.currentTrack.progress < 100
         ? this.currentTrack.progress++
@@ -168,68 +116,52 @@ export class HomePage {
     if (this.songNo > 3) {
       return 0;
     }
-    // alert("foldername: " + path);
+
     let file = new File();
     this.file
       .listDir(file.externalRootDirectory, path)
       .then(
         result => {
+          console.log(JSON.stringify(result));
           for (let item of result) {
             if (
               item.isDirectory == true &&
               item.name != "." &&
               item.name != ".."
             ) {
-              // if(this.songNo<=3){
-              //  this.getFileList(path + "/" + item.name);
-              //}
               this.getFileList(path + "/" + item.name);
             } else {
-              // alert("fileName insde filelist " + JSON.stringify(item.fullPath));
-              // this.file
               this.fileType(item);
             }
           }
         },
         error => {
-          // alert("inside err " + error);
+          console.log("inside err " + error);
         }
       )
-      // .then(() => alert("filelist" + JSON.stringifythis._fileList[0]))
+
       .catch(e => {
         console.log(JSON.stringify(e));
       });
   }
 
   fileSearch() {
-    // alert("hello");
-    if (this.songNo > 3) {
-      return 0;
-    }
     /* test */
 
     this.file
       .listDir(this.file.externalRootDirectory, "")
       .then(result => {
+        alert(JSON.stringify(result));
         for (let item of result) {
           if (
             item.isDirectory == true &&
             item.name != "." &&
             item.name != ".."
           ) {
-            if (this.songNo > 3) {
-              return 0;
-            }
             this.folderCount++;
 
             this.getFileList(item.name); //Get all the files inside the folder. recursion will probably be useful here.
           } else if (item.isFile == true) {
-            //File found
-            //alert("fileName inside fileSearch" + JSON.stringify(item));
-            // this._fileList.push({
-            //   name: item.name,
-            //   path: item.fullPath
-            // });
             this.fileType(item);
           }
         }
@@ -239,12 +171,10 @@ export class HomePage {
       });
   }
 
-  FileDir() {
-    //alert("filelist:" + JSON.parse(this._fileList[0]));
-  }
+  FileDir() {}
+
   /* for searching filetype */
   fileType(songDetail) {
-    // alert("songPath " + JSON.stringify(songDetail));
     if (this.songNo > 3) {
       return 0;
     }
@@ -255,7 +185,6 @@ export class HomePage {
           this.file.externalRootDirectory + songDetail.fullPath
         )
         .then((songDetail: FileEntry) => {
-          // alert("songDetail: " + JSON.stringify(songDetail));
           console.log("songdetail: ", JSON.stringify(songDetail));
           return new Promise((resolve, reject) => {
             songDetail.file(
@@ -263,12 +192,13 @@ export class HomePage {
               error => reject(error)
             );
           }).then((sDetail: IFile) => {
-            //alert("Detail: " + JSON.stringify(sDetail));
             if (sDetail.type == "audio/mpeg") {
               console.log("mp3songs " + JSON.stringify(sDetail));
 
               /* trim path */
-              let pathalone =  (this.file.externalRootDirectory + songDetail.fullPath).substring(8);
+              let pathalone = (
+                this.file.externalRootDirectory + songDetail.fullPath
+              ).substring(8);
               alert("pathalone " + pathalone);
               this.tracks.push({
                 title: songDetail.name,
@@ -277,10 +207,8 @@ export class HomePage {
                 songPath: pathalone,
                 progress: 0,
                 img: "/android_asset/www/assets/imgs/5.jpg"
-                // name: songDetail.name,
-                // path: songDetail.fullPath
               });
-              this.songNo=this.songNo+1;
+              this.songNo = this.songNo + 1;
             }
           });
         });

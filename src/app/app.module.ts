@@ -5,7 +5,6 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
 import { Media } from "@ionic-native/media";
 import { FileChooser } from "@ionic-native/file-chooser";
-
 import { MyApp } from "./app.component";
 import { HomePage } from "../pages/home/home";
 import { ProgressBarComponent } from "../components/progress-bar/progress-bar";

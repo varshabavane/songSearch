@@ -1,10 +1,12 @@
 <ion-header>
-  <progress-bar [progress]="currentTrack.progress"></progress-bar>
-</ion-header>
+    <ion-navbar color="hi">
+      <ion-title align="centre">Music</ion-title>
+    </ion-navbar>
+  </ion-header>
 
 <ion-content fullscreen>
   <button ion-button (click)="fileSearch()">songCount {{songNo}}</button>
-  <!-- <button ion-button (click)="stop()">Stop</button> -->
+  
   <ion-card ion-fixed>
     <ion-card-header>
       {{currentTrack.title}}
@@ -32,6 +34,10 @@
 <ion-footer>
 
   <ion-grid>
+    <ion-row>
+        <progress-bar [progress]="currentTrack.progress"></progress-bar>
+
+    </ion-row>
 
     <ion-row>
 
