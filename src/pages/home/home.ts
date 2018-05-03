@@ -4,6 +4,8 @@ import { Media, MediaObject } from "@ionic-native/media";
 import { FileChooser } from "@ionic-native/file-chooser";
 import { File, FileEntry, IFile } from "@ionic-native/file";
 import { FilePath } from "@ionic-native/file-path";
+/*local storage */
+import { MusicDataProvider } from "../../providers/music-data/music-data";
 
 @Component({
   selector: "page-home",
@@ -30,7 +32,8 @@ export class HomePage {
     // private filePath: FilePath,
     private media: Media,
     public filePath: FilePath,
-    public file: File
+    public file: File,
+    public musicData: MusicDataProvider
   ) {
     this.tracks = [
       {
@@ -82,7 +85,32 @@ export class HomePage {
       //   img: "/android_asset/www/assets/imgs/1.jpg"
     ];
     this.currentTrack = this.tracks[0];
+
+    
   }
+
+  test() {
+    // alert("hello");
+    this.musicData.getMusicData().then(songDetails => {
+      if (songDetails) {
+        this.tracks = songDetails;
+        alert("songDetails " + JSON.stringify(songDetails));
+      }
+    });
+
+    
+  }
+
+  saveMusic() {
+    //this.tracks.push(musicData);
+    alert('save')
+    this.musicData.saveMusicData(this.tracks);
+    
+  }
+
+  // ionViewDidLoad(){
+  //   this.musicData.saveMusicData(this.tracks)
+  // }
 
   filechooser() {
     this.fileChooser
@@ -96,7 +124,7 @@ export class HomePage {
             // this.audioPlay(result);
             this.nativePath = result;
             let pathalone = this.nativePath.substring(8);
-            alert("pathalone " +pathalone)
+            //alert("pathalone " + pathalone);
             let newSong = {
               title: "aafreen",
               artist: "sonu nigam",
@@ -165,9 +193,9 @@ export class HomePage {
   /* MUSIC File Search */
 
   getFileList(path: string) {
-    if (this.songNo > 3) {
-      return 0;
-    }
+    // if (this.songNo > 3) {
+    //   return 0;
+    // }
     // alert("foldername: " + path);
     let file = new File();
     this.file
@@ -203,9 +231,9 @@ export class HomePage {
 
   fileSearch() {
     // alert("hello");
-    if (this.songNo > 3) {
-      return 0;
-    }
+    // if (this.songNo > 3) {
+    //   return 0;
+    // }
     /* test */
 
     this.file
@@ -217,9 +245,9 @@ export class HomePage {
             item.name != "." &&
             item.name != ".."
           ) {
-            if (this.songNo > 3) {
-              return 0;
-            }
+            // if (this.songNo > 3) {
+            //   return 0;
+            // }
             this.folderCount++;
 
             this.getFileList(item.name); //Get all the files inside the folder. recursion will probably be useful here.
@@ -245,9 +273,9 @@ export class HomePage {
   /* for searching filetype */
   fileType(songDetail) {
     // alert("songPath " + JSON.stringify(songDetail));
-    if (this.songNo > 3) {
-      return 0;
-    }
+    // if (this.songNo > 3) {
+    //   return 0;
+    // }
     try {
       let filetype = new File();
       filetype
@@ -268,8 +296,10 @@ export class HomePage {
               console.log("mp3songs " + JSON.stringify(sDetail));
 
               /* trim path */
-              let pathalone =  (this.file.externalRootDirectory + songDetail.fullPath).substring(8);
-              alert("pathalone " + pathalone);
+              let pathalone = (
+                this.file.externalRootDirectory + songDetail.fullPath
+              ).substring(8);
+              // alert("pathalone " + pathalone);
               this.tracks.push({
                 title: songDetail.name,
                 artist: songDetail.name /* need artist details */,
@@ -280,7 +310,7 @@ export class HomePage {
                 // name: songDetail.name,
                 // path: songDetail.fullPath
               });
-              this.songNo=this.songNo+1;
+              this.songNo = this.songNo + 1;
             }
           });
         });

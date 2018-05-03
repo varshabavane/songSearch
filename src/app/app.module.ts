@@ -12,9 +12,11 @@ import { ProgressBarComponent } from "../components/progress-bar/progress-bar";
 
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
+import { MusicDataProvider } from '../providers/music-data/music-data';
+import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
   declarations: [MyApp, HomePage, ProgressBarComponent],
-  imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+  imports: [BrowserModule, IonicModule.forRoot(MyApp), IonicStorageModule.forRoot()],
   bootstrap: [IonicApp],
   entryComponents: [MyApp, HomePage],
   providers: [
@@ -24,7 +26,9 @@ import { FilePath } from '@ionic-native/file-path';
     Media,
     FileChooser,
     File,
-    FilePath
+    FilePath,
+    MusicDataProvider,
+    
   ]
 })
 export class AppModule {}
